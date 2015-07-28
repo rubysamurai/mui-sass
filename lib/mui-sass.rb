@@ -2,7 +2,9 @@ module Mui
   module Sass
     class << self
       def load!
-        if defined?(::Rails)
+        if defined?(::Compass::Frameworks)
+          register_compass_extension
+        elsif defined?(::Rails)
           register_rails_engine
         elsif defined?(::Sprockets)
           register_sprockets
@@ -29,6 +31,18 @@ module Mui
           require 'sass'
 
           ::Sass.load_paths << stylesheets_path
+        end
+
+        def register_compass_extension
+          require 'mui/sass/version'
+
+          ::Compass::Frameworks.register(
+              'mui',
+              version:               Mui::Sass::VERSION,
+              path:                  gem_path,
+              stylesheets_directory: stylesheets_path,
+              templates_directory:   File.join(gem_path, 'templates')
+          )
         end
 
         def register_rails_engine
