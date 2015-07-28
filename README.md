@@ -1,5 +1,8 @@
 # MUI for Sass
 
+[![Gem Version](https://badge.fury.io/rb/mui-sass.svg)](http://badge.fury.io/rb/mui-sass)
+[![Build Status](https://travis-ci.org/rubysamurai/mui-sass.svg?branch=master)](https://travis-ci.org/rubysamurai/mui-sass)
+
 `mui-sass` is a Sass-powered version of [MUI framework](https://www.muicss.com/) for your Ruby applications. It works with Ruby on Rails, Compass, Sprockets, etc.
 
 ## Installation
