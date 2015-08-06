@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Dmitriy Tarasov']
   spec.email         = ['info@rubysamurai.com']
 
-  spec.summary       = 'MUI framework, powered by Sass and ready to use in Ruby projects'
-  spec.description   = 'MUI framework, powered by Sass and ready to use in Ruby projects'
+  spec.summary       = "MUI is a lightweight framework that follows Google's Material Design guidelines"
+  spec.description   = "MUI is a lightweight framework that follows Google's Material Design guidelines"
   spec.homepage      = 'https://github.com/rubysamurai/mui-sass'
   spec.license       = 'MIT'
 
