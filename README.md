@@ -3,11 +3,11 @@
 [![Gem Version](https://badge.fury.io/rb/mui-sass.svg)](http://badge.fury.io/rb/mui-sass)
 [![Build Status](https://travis-ci.org/rubysamurai/mui-sass.svg?branch=master)](https://travis-ci.org/rubysamurai/mui-sass)
 
-`mui-sass` is a Sass-powered version of [MUI framework](https://www.muicss.com/) for your Ruby applications. It works with Ruby on Rails, Compass, Sprockets, etc.
+[MUI](https://www.muicss.com/) is a lightweight CSS framework that follows Google's Material Design guidelines
 
-## Installation
+`mui-sass` is a Sass-powered version of MUI framework for your applications. It works with Ruby on Rails, Compass, Sprockets, etc. 
 
-This package provides MUI framework CSS and JavaScript components. HTML Email, React, WebComponents and Design Files are not included.
+`mui-sass` allows to include MUI framework CSS and JavaScript components. HTML Email, React, WebComponents and Design Files are not included.
 
 ## Installation
 
@@ -16,29 +16,29 @@ This package provides MUI framework CSS and JavaScript components. HTML Email, R
 
 ### Ruby on Rails
 
-Add this line to your Rails application's Gemfile:
+Open your Rails application's Gemfile and add this line:
 
 ```ruby
 gem 'mui-sass'
 ```
 
-And then execute `bundle` command to install.
+Save Gemfile and execute `bundle` command to install the gem.
 
-Import `mui` in `app/assets/stylesheets/application.scss`:
+Open `app/assets/stylesheets/application.scss` file and add this line:
 
 ```scss
 @import 'mui';
 ```
 
-Default Rails installation comes with `.css` file extension for stylesheet assests files, make sure you change it to `.scss` and remove all the `//= require` and `//= require_tree` statements from file.
+> **Note:** Default Rails installation comes with `.css` file extension for stylesheet assests files, make sure you change it to `.scss` and remove all the `//= require` and `//= require_tree` statements from file. Alternatively, to keep original `application.css` file, you can create `custom.scss` file in the same folder and import `mui` there.
 
-Alternatively, to keep original `application.css` file, you can create `custom.scss` file in same folder and import `mui` there.
-
-Require `mui` javascript in `app/assets/javascripts/application.js`:
+Open `app/assets/javascripts/application.js` file and add this line:
 
 ````
 //= require mui
 ````
+
+Restart Rails web server if it was running and now your Rails application is powered by Sass version of MUI framework.
 
 ### Compass
 
@@ -84,7 +84,7 @@ This command will create a new Compass project with `styles.scss` file, which im
 
 By default, using `@import 'mui';` and `//= require mui`, all of MUI components are imported.
 
-You can import individual `scss` components like this:
+You can also import individual Sass components.
 
 First you need to include core components:
 
@@ -95,7 +95,8 @@ First you need to include core components:
 @import 'mui/mixins';
 ```
 
-Then add component:
+Then include desired Sass component:
+
 ```scss
 @import 'mui/appbar';
 @import 'mui/buttons';
@@ -115,8 +116,29 @@ Then add component:
 @import 'mui/typography';
 ```
 
-The full set of MUI variables can be found [here](https://github.com/rubysamurai/mui-sass/blob/master/vendor/assets/stylesheets/mui/_variables.scss)
+### Variables
+
+Sass version of MUI framework provides many variables to make customization process convenient. The full set of MUI variables can be found [here](https://github.com/rubysamurai/mui-sass/blob/master/vendor/assets/stylesheets/mui/_variables.scss)
+
+To override the variable it must be redefined before the @import directive, like this:
+
+```scss
+$mui-base-font-size: 16px !default;
+@import 'mui';
+```
+
+## Versioning
+
+MUI for Sass follows the upstream version of MUI framework. But last version number may be ahead, in case there is a need to release project specific changes.
+
+Please always refer to the [CHANGELOG](https://github.com/rubysamurai/mui-sass/blob/master/CHANGELOG.md) when upgrading.
 
 ## Contributing
 
-Fork the project and submit a pull request.
+Anyone is welcome to contribute to MUI Sass. Please [raise an issue](https://github.com/rubysamurai/mui-sass/issues), fork the project, make changes to your forked repository and submit a pull request.
+
+## License
+
+MUI © Andres Morey, 2015. Released under the [MIT](https://github.com/muicss/mui/blob/master/LICENSE.txt) license.
+
+`mui-sass` © Dmitriy Tarasov, 2015. Released under the [MIT](https://github.com/rubysamurai/mui-sass/blob/master/LICENSE.txt) license.
