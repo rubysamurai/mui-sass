@@ -42,7 +42,7 @@
   background-clip: padding-box;
 
   // open state
-  &.mui-open {
+  &.mui-is-open {
     display: block;
   }
   
@@ -65,7 +65,7 @@
     }
   }
 
-  > .mui-disabled > a {
+  > .mui-is-disabled > a {
     &,
     &:hover,
     &:focus {
@@ -84,7 +84,8 @@
 }
 
 // right align
-.mui-dropdown-menu-right {
+.mui-dropdown-menu-right,
+.mui-dropdown-menu[data-mui-align="right"] {
   left: auto;
   right: 0;
 }

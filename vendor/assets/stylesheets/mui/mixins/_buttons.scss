@@ -4,15 +4,12 @@
 
   &:hover,
   &:focus,
-  &:active,
-  .mui-open > &.mui-dropdown-toggle {
+  &:active {
     color: $font-color;
     background-color: lighten($bg-color, 5%);
   }
 
-  &[disabled],
-  fieldset[disabled] & {
-    &,
+  &[disabled] {
     &:hover,
     &:focus,
     &:active {
@@ -23,21 +20,19 @@
 }
 
 @mixin button-flat-variant($font-color, $bg-color-hover) {
-  &.mui-btn-flat {
+  &.mui-btn-flat,
+  &[data-mui-style="flat"] {
     color: $font-color;
     background-color: transparent;
 
     &:hover,
     &:focus,
-    &:active,
-    .mui-open > &.mui-dropdown-toggle {
+    &:active {
       color: $font-color;
       background-color: $bg-color-hover;
     }
 
-    &[disabled],
-    fieldset[disabled] & {
-      &,
+    &[disabled] {
       &:hover,
       &:focus,
       &:active {

@@ -23,7 +23,7 @@ var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
     attrKey = 'data-mui-toggle',
     attrSelector = '[data-mui-toggle="dropdown"]',
-    openClass = 'mui-open',
+    openClass = 'mui-is-open',
     menuClass = 'mui-dropdown-menu';
 
 
@@ -1087,14 +1087,23 @@ function callbackFn(instance, funcName) {
  * @param {String} eventType - The event type.
  * @param {Boolean} bubbles=true - If true, event bubbles.
  * @param {Boolean} cancelable=true = If true, event is cancelable
+ * @param {Object} [data] - Data to add to event object
  */
-function dispatchEventFn(element, eventType, bubbles, cancelable) {
+function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
   var ev = document.createEvent('HTMLEvents'),
       bubbles = (bubbles !== undefined) ? bubbles : true,
-      cancelable = (cancelable !== undefined) ? cancelable : true;
+      cancelable = (cancelable !== undefined) ? cancelable : true,
+      k;
   
   ev.initEvent(eventType, bubbles, cancelable);
-  element.dispatchEvent(ev);
+
+  // add data to event object
+  if (data) for (k in data) ev[k] = data[k];
+
+  // dispatch
+  if (element) element.dispatchEvent(ev);
+
+  return ev;
 }
 
 
@@ -1369,7 +1378,7 @@ module.exports = overlayFn;
 var jqLite = require('./lib/jqLite.js'),
     util = require('./lib/util.js'),
     btnClass = 'mui-btn',
-    btnFlatClass = 'mui-btn-flat',
+    btnStyleKey = 'data-mui-style',
     btnFloatingClass = 'mui-btn-floating',
     rippleClass = 'mui-ripple-effect',
     animationName = 'mui-btn-inserted';
@@ -1426,7 +1435,9 @@ function eventHandler(ev) {
       radius;
 
   // get height
-  if (jqLite.hasClass(buttonEl, btnFloatingClass)) {
+  // TODO: remove class check
+  if (jqLite.hasClass(buttonEl, btnFloatingClass) || 
+      buttonEl.getAttribute(btnStyleKey) === 'fab') {
     diameter = offset.height / 2;
   } else {
     diameter = offset.height;
@@ -1480,7 +1491,11 @@ var jqLite = require('./lib/jqLite.js'),
     attrKey = 'data-mui-toggle',
     attrSelector = '[' + attrKey + '="tab"]',
     controlsAttrKey = 'data-mui-controls',
-    activeClass = 'mui-active';
+    activeClass = 'mui-is-active',
+    showstartKey = 'mui.tabs.showstart',
+    showendKey = 'mui.tabs.showend',
+    hidestartKey = 'mui.tabs.hidestart',
+    hideendKey = 'mui.tabs.hideend';
 
 
 /**
@@ -1510,10 +1525,7 @@ function clickHandler(ev) {
   // exit if toggle element is disabled
   if (toggleEl.getAttribute('disabled') !== null) return;
 
-  // let event bubble before toggling tab
-  setTimeout(function() {
-    if (!ev.defaultPrevented) activateTab(toggleEl);
-  }, 0);
+  activateTab(toggleEl);
 }
 
 
@@ -1521,35 +1533,76 @@ function clickHandler(ev) {
  * Activate the tab controlled by the toggle element.
  * @param {Element} toggleEl - The toggle element.
  */
-function activateTab(toggleEl) {
-  var tabEl = toggleEl.parentNode,
-      paneId = toggleEl.getAttribute(controlsAttrKey),
-      paneEl = document.getElementById(paneId),
-      tabs,
-      panes,
-      el,
-      i;
+function activateTab(currToggleEl) {
+  var currTabEl = currToggleEl.parentNode,
+      currPaneId = currToggleEl.getAttribute(controlsAttrKey),
+      currPaneEl = document.getElementById(currPaneId),
+      prevTabEl,
+      prevPaneEl,
+      prevPaneId,
+      prevToggleEl,
+      currData,
+      prevData,
+      ev1,
+      ev2,
+      cssSelector;
 
   // raise error if pane doesn't exist
-  if (!paneEl) util.raiseError('Tab pane "' + paneId + '" not found');
+  if (!currPaneEl) util.raiseError('Tab pane "' + currPaneId + '" not found');
 
-  // de-activate tab siblings
-  tabs = tabEl.parentNode.children;
-  for (i=tabs.length - 1; i >= 0; i--) {
-    el = tabs[i];
-    if (el !== tabEl) jqLite.removeClass(el, activeClass);
+  // get previous pane
+  prevPaneEl = getActiveSibling(currPaneEl);
+  prevPaneId = prevPaneEl.id;
+
+  // get previous toggle and tab elements
+  cssSelector = '[' + controlsAttrKey + '="' + prevPaneId + '"]';
+  prevToggleEl = document.querySelectorAll(cssSelector)[0];
+  prevTabEl = prevToggleEl.parentNode;
+
+  // define event data
+  currData = {paneId: currPaneId, relatedPaneId: prevPaneId};
+  prevData = {paneId: prevPaneId, relatedPaneId: currPaneId};
+
+  // dispatch 'hidestart', 'showstart' events
+  ev1 = util.dispatchEvent(prevToggleEl, hidestartKey, true, true, prevData);
+  ev2 = util.dispatchEvent(currToggleEl, showstartKey, true, true, currData);
+
+  // let events bubble
+  setTimeout(function() {
+    // exit if either event was canceled
+    if (ev1.defaultPrevented || ev2.defaultPrevented) return;
+
+    // de-activate previous
+    if (prevTabEl) jqLite.removeClass(prevTabEl, activeClass);
+    if (prevPaneEl) jqLite.removeClass(prevPaneEl, activeClass);
+
+    // activate current
+    jqLite.addClass(currTabEl, activeClass);
+    jqLite.addClass(currPaneEl, activeClass);
+
+    // dispatch 'hideend', 'showend' events
+    util.dispatchEvent(prevToggleEl, hideendKey, true, false, prevData);
+    util.dispatchEvent(currToggleEl, showendKey, true, false, currData);
+  }, 0);
+}
+
+
+/** 
+ * Get previous active sibling.
+ * @param {Element} el - The anchor element.
+ */
+function getActiveSibling(el) {
+  var elList = el.parentNode.children,
+      q = elList.length,
+      activeEl = null,
+      tmpEl;
+
+  while (q-- && !activeEl) {
+    tmpEl = elList[q];
+    if (tmpEl !== el && jqLite.hasClass(tmpEl, activeClass)) activeEl = tmpEl
   }
-  
-  // de-activate pane siblings
-  panes = paneEl.parentNode.children;
-  for (i=panes.length - 1; i >= 0; i--) {
-    el = panes[i];
-    if (el !== paneEl) jqLite.removeClass(el, activeClass);
-  }
-  
-  // activate tab and pane
-  jqLite.addClass(tabEl, activeClass);
-  jqLite.addClass(paneEl, activeClass);
+
+  return activeEl;
 }
 
 
