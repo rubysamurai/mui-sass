@@ -1,5 +1,5 @@
 module Mui
   module Sass
-    VERSION = '0.1.21.1'
+    VERSION = '0.1.22'
   end
 end
