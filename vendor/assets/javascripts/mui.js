@@ -138,10 +138,13 @@ var jqLite = require('../lib/jqLite.js'),
     wrapperClass = 'mui-select',
     cssSelector = '.mui-select > select',
     menuClass = 'mui-select__menu',
+    wrapperPadding = 15,  // from CSS
+    inputHeight = 32,  // from CSS
     optionHeight = 42,  // from CSS
     menuPadding = 8,  // from CSS
     doc = document,
     win = window;
+
 
 /**
  * Initialize select element.
@@ -261,7 +264,7 @@ Select.prototype.renderMenu = function() {
   // check and reset flag
   if (this.useDefault === true) return this.useDefault = false;
 
-  new Menu(this.selectEl);
+  new Menu(this.wrapperEl, this.selectEl);
 }
 
 
@@ -269,18 +272,22 @@ Select.prototype.renderMenu = function() {
  * Creates a new Menu
  * @class
  */
-function Menu(selectEl) {
+function Menu(wrapperEl, selectEl) {
+  // add scroll lock
+  util.enableScrollLock();
+
   // instance variables
   this.origIndex = null;
   this.currentIndex = null;
   this.selectEl = selectEl;
-  this.menuEl = this._createMenuEl(selectEl);
+  this.menuEl = this._createMenuEl(wrapperEl, selectEl);
   this.clickCallbackFn = util.callback(this, 'clickHandler');
   this.keydownCallbackFn = util.callback(this, 'keydownHandler');
   this.destroyCallbackFn = util.callback(this, 'destroy');
 
   // add to DOM
-  selectEl.parentNode.appendChild(this.menuEl);
+  wrapperEl.appendChild(this.menuEl);
+  jqLite.scrollTop(this.menuEl, this.menuEl._muiScrollTop);
 
   // blur active element
   setTimeout(function() {
@@ -289,7 +296,7 @@ function Menu(selectEl) {
       doc.activeElement.blur();
     }
   }, 0);
-  
+
   // attach event handlers
   jqLite.on(this.menuEl, 'click', this.clickCallbackFn);
   jqLite.on(doc, 'keydown', this.keydownCallbackFn);
@@ -305,15 +312,14 @@ function Menu(selectEl) {
  * Create menu element
  * @param {Element} selectEl - The select element
  */
-Menu.prototype._createMenuEl = function(selectEl) {
+Menu.prototype._createMenuEl = function(wrapperEl, selectEl) {
   var optionEl, itemEl, i, minTop, maxTop, top;
 
   var menuEl = doc.createElement('div'),
       optionList = selectEl.children,
       m = optionList.length,
       selectedPos = 0,
-      idealTop = 13;
-  
+      initTop = (menuPadding + optionHeight) - (wrapperPadding + inputHeight);
 
   // create element
   menuEl.className = menuClass;
@@ -341,25 +347,42 @@ Menu.prototype._createMenuEl = function(selectEl) {
   var viewHeight = doc.documentElement.clientHeight;
 
   // set height (use viewport as maximum height)
-  var height = m * optionHeight + 2 * menuPadding;
+  var height = m * optionHeight + 2 * menuPadding,
+      isOverflow = height > viewHeight;
+
   height = Math.min(height, viewHeight);
   jqLite.css(menuEl, 'height', height + 'px');
 
   // ideal position
-  idealTop += selectedPos * optionHeight;
-  idealTop = -1 * idealTop;
+  initTop -= selectedPos * optionHeight;
 
   // minimum position
-  minTop = -1 * selectEl.getBoundingClientRect().top;
+  minTop = -1 * wrapperEl.getBoundingClientRect().top;
 
   // maximium position
   maxTop = (viewHeight - height) + minTop;
 
   // prevent overflow-y
-  top = Math.max(idealTop, minTop);
+  top = Math.max(initTop, minTop);
   top = Math.min(top, maxTop);
 
   jqLite.css(menuEl, 'top', top + 'px');
+
+  // set menu scroll position
+  if (isOverflow) {
+    var scrollIdeal, scrollMax;
+
+    scrollIdeal = (menuPadding + (selectedPos + 1) * optionHeight) - 
+      (-1 * top + wrapperPadding + inputHeight);
+
+    scrollMax = m * optionHeight + 2 * menuPadding - height;
+
+    menuEl._muiHasOverflow = true;
+    menuEl._muiScrollTop = Math.min(scrollIdeal, scrollMax);
+  } else {
+    menuEl._muiHasOverflow = false;
+    menuEl._muiScrollTop = 0;
+  }
 
   return menuEl;
 }
@@ -460,7 +483,10 @@ Menu.prototype.destroy = function() {
   // remove element and focus element
   this.menuEl.parentNode.removeChild(this.menuEl);
   this.selectEl.focus();
-  
+
+  // remove scroll lock
+  util.disableScrollLock();
+
   // remove event handlers
   jqLite.off(this.menuEl, 'click', this.clickCallbackFn);
   jqLite.off(doc, 'keydown', this.keydownCallbackFn);
@@ -595,6 +621,11 @@ module.exports = {
  */
 
 'use strict';
+
+// Global vars
+var gDoc = document,
+    gDocEl = gDoc.documentElement,
+    gWin = window;
 
 
 /**
@@ -766,22 +797,62 @@ function jqLiteOne(element, type, callback, useCapture) {
 
 
 /**
+ * Get or set horizontal scroll position
+ * @param {Element} element - The DOM element
+ * @param {number} [value] - The scroll position
+ */
+function jqLiteScrollLeft(element, value) {
+  // get
+  if (value === undefined) {
+    if (element === gWin) {
+      var t = (gWin.pageXOffset || gDocEl.scrollLeft)
+      return t - (gDocEl.clientLeft || 0);
+    } else {
+      return element.scrollLeft;
+    }
+  }
+
+  // set
+  if (element === gWin) gWin.scrollTo(value, jqLiteScrollTop(gWin));
+  else element.scrollLeft = value;
+}
+
+
+/**
+ * Get or set vertical scroll position
+ * @param {Element} element - The DOM element
+ * @param {number} value - The scroll position
+ */
+function jqLiteScrollTop(element, value) {
+  //return _scrollPos(element, 'top', value);
+
+  // get
+  if (value === undefined) {
+    if (element === gWin) {
+      return (gWin.pageYOffset || gDocEl.scrollTop) - (gDocEl.clientTop || 0);
+    } else {
+      return element.scrollTop;
+    }
+  }
+
+  // set
+  if (element === gWin) gWin.scrollTo(jqLiteScrollLeft(gWin), value);
+  else element.scrollTop = value;
+}
+
+
+/**
  * Return object representing top/left offset and element height/width.
  * @param {Element} element - The DOM element.
  */
 function jqLiteOffset(element) {
-  var win = window,
-      docEl = document.documentElement,
-      rect = element.getBoundingClientRect(),
-      viewLeft,
-      viewTop;
-
-  viewLeft = (win.pageXOffset || docEl.scrollLeft) - (docEl.clientLeft || 0);
-  viewTop = (win.pageYOffset || docEl.scrollTop) - (docEl.clientTop || 0);
+  var rect = element.getBoundingClientRect(),
+      scrollTop = jqLiteScrollTop(gWin),
+      scrollLeft = jqLiteScrollLeft(gWin);
 
   return {
-    top: rect.top + viewTop,
-    left: rect.left + viewLeft,
+    top: rect.top + scrollTop,
+    left: rect.left + scrollLeft,
     height: rect.height,
     width: rect.width
   };
@@ -938,7 +1009,13 @@ module.exports = {
   removeClass: jqLiteRemoveClass,
 
   /** Check JavaScript variable instance type */
-  type: jqLiteType
+  type: jqLiteType,
+
+  /** Get or set horizontal scroll position */
+  scrollLeft: jqLiteScrollLeft,
+
+  /** Get or set vertical scroll position */
+  scrollTop: jqLiteScrollTop
 };
 
 },{}],6:[function(require,module,exports){
@@ -953,11 +1030,13 @@ module.exports = {
 var config = require('../config.js'),
     jqLite = require('./jqLite.js'),
     win = window,
-    doc = window.document,
+    doc = document,
     nodeInsertedCallbacks = [],
+    scrollLock = 0,
+    scrollLockPos,
+    scrollLockEl,
     head,
     _supportsPointerEvents;
-
 
 head = doc.head || doc.getElementsByTagName('head')[0] || doc.documentElement;
 
@@ -982,18 +1061,16 @@ function logFn() {
  * @param {string} cssText - The css text.
  */
 function loadStyleFn(cssText) {
-  if (doc.createStyleSheet) {
-    doc.createStyleSheet().cssText = cssText;
-  } else {
-    var e = doc.createElement('style');
-    e.type = 'text/css';
+  var e = doc.createElement('style');
+  e.type = 'text/css';
     
-    if (e.styleSheet) e.styleSheet.cssText = cssText;
-    else e.appendChild(doc.createTextNode(cssText));
-    
-    // add to document
-    head.insertBefore(e, head.firstChild);
-  }
+  if (e.styleSheet) e.styleSheet.cssText = cssText;
+  else e.appendChild(doc.createTextNode(cssText));
+  
+  // add to document
+  head.insertBefore(e, head.firstChild);
+
+  return e;
 }
 
 
@@ -1107,6 +1184,41 @@ function dispatchEventFn(element, eventType, bubbles, cancelable, data) {
 
 
 /**
+ * Turn on window scroll lock.
+ */
+function enableScrollLockFn() {
+  // increment counter
+  scrollLock += 1
+
+  // add lock
+  if (scrollLock === 1) {
+    scrollLockPos = {left: jqLite.scrollLeft(win), top: jqLite.scrollTop(win)};
+    scrollLockEl = loadStyleFn('body{overflow:hidden!important;}');
+    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+  }
+}
+
+
+/**
+ * Turn off window scroll lock.
+ */
+function disableScrollLockFn() {
+  // ignore
+  if (scrollLock === 0) return;
+
+  // decrement counter
+  scrollLock -= 1
+
+  // remove lock 
+  if (scrollLock === 0) {
+    scrollLockEl.parentNode.removeChild(scrollLockEl);
+    win.scrollTo(scrollLockPos.left, scrollLockPos.top);
+    scrollLockEl = null;
+  }
+}
+
+
+/**
  * Define the module API
  */
 module.exports = {
@@ -1116,9 +1228,15 @@ module.exports = {
   /** Classnames object to string */
   classNames: classNamesFn,
 
+  /** Disable scroll lock */
+  disableScrollLock: disableScrollLockFn,
+
   /** Dispatch event */
   dispatchEvent: dispatchEventFn,
   
+  /** Enable scroll lock */
+  enableScrollLock: enableScrollLockFn,
+
   /** Log messages to the console when debug is turned on */
   log: logFn,
 
@@ -1244,7 +1362,8 @@ function overlayOn(options, childElement) {
       overlayEl = document.getElementById(overlayId);
     
   // add overlay
-  jqLite.addClass(bodyEl, bodyClass);
+  util.enableScrollLock();
+  //jqLite.addClass(bodyEl, bodyClass);
 
   if (!overlayEl) {
     // create overlayEl
@@ -1301,7 +1420,7 @@ function overlayOff() {
     callbackFn = overlayEl.muiOptions.onclose;
   }
 
-  jqLite.removeClass(document.body, bodyClass);
+  util.disableScrollLock();
 
   // remove option handlers
   removeKeyupHandler();
