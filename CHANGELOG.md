@@ -1,3 +1,9 @@
+## 0.2.4 (2015-11-27)
+
+- Update assets to match upstream version
+
+Framework version: MUI v0.2.4
+
 ## 0.2.2 (2015-11-22)
 
 - Update assets to match upstream version
