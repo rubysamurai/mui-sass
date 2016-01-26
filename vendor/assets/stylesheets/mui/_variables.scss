@@ -19,10 +19,10 @@ $mui-danger-color:             mui-color('red', '500') !default;
 // MEDIA QUERY BREAKPOINTS
 // ============================================================================
 
-$mui-screen-xs:     480px !default;
-$mui-screen-sm-min: 768px !default;
-$mui-screen-md-min: 992px !default;
-$mui-screen-lg-min: 1200px !default;
+$mui-screen-sm-min: 544px !default;
+$mui-screen-md-min: 768px !default;
+$mui-screen-lg-min: 992px !default;
+$mui-screen-xl-min: 1200px !default;
 
 
 
@@ -42,9 +42,10 @@ $mui-grid-float-breakpoint:      $mui-screen-sm-min !default;
 // CONTAINER SIZES
 // ============================================================================
 
-$mui-container-sm:               ($mui-screen-sm-min - 18px) !default;
-$mui-container-md:               (940px + $mui-grid-gutter-width) !default;
-$mui-container-lg:               (1140px + $mui-grid-gutter-width) !default;
+$mui-container-sm:               570px !default;
+$mui-container-md:               740px !default;
+$mui-container-lg:               960px !default;
+$mui-container-xl:               1170px !default;
 
 
 
@@ -77,6 +78,27 @@ $mui-base-font-size:      14px !default;
 $mui-base-font-weight:    400 !default;
 $mui-base-line-height:    1.429 !default;
 $mui-base-font-smoothing: false;
+
+
+
+
+// ============================================================================
+// TEXT COLORS
+// ============================================================================
+
+$mui-text-dark:             mui-color('black-alpha-87') !default;
+$mui-text-dark-secondary:   mui-color('black-alpha-54') !default;
+$mui-text-dark-hint:        mui-color('black-alpha-38') !default;
+
+$mui-text-light:            mui-color('white') !default;
+$mui-text-light-secondary:  mui-color('white-alpha-70') !default;
+$mui-text-light-hint:       mui-color('white-alpha-30') !default;
+
+$mui-text-accent:           rgba($mui-accent-color, .87) !default;
+$mui-text-accent-secondary: rgba($mui-accent-color, .54) !default;
+$mui-text-accent-hint:      rgba($mui-accent-color, .38) !default;
+
+$mui-text-danger:          $mui-danger-color !default;
 
 
 
@@ -268,4 +290,4 @@ $mui-base-line-height-computed: floor(($mui-base-font-size * $mui-base-line-heig
 $mui-screen-xs-max: ($mui-screen-sm-min - 1);
 $mui-screen-sm-max: ($mui-screen-md-min - 1);
 $mui-screen-md-max: ($mui-screen-lg-min - 1);
-
+$mui-screen-lg-max: ($mui-screen-xl-min - 1);

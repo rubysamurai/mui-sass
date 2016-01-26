@@ -75,24 +75,23 @@
 // TEXT COLOR HELPERS
 // ============================================================================
 
-.mui--text-danger   { color: $mui-danger-color; }
+.mui--text-dark             { color: $mui-text-dark; }
+.mui--text-dark-secondary   { color: $mui-text-dark-secondary; }
+.mui--text-dark-hint        { color: $mui-text-dark-hint; }
 
-.mui--text-black    { color: mui-color('black'); }
-.mui--text-black-87 { color: mui-color('black-alpha-87'); }
-.mui--text-black-54 { color: mui-color('black-alpha-54'); }
-.mui--text-black-38 { color: mui-color('black-alpha-38'); }
-.mui--text-black-12 { color: mui-color('black-alpha-12'); }
+.mui--text-light            { color: $mui-text-light; }
+.mui--text-light-secondary  { color: $mui-text-light-secondary; }
+.mui--text-light-hint       { color: $mui-text-light-hint; }
 
-.mui--text-white    { color: mui-color('white'); }
-.mui--text-white-70 { color: mui-color('white-alpha-70'); }
-.mui--text-white-30 { color: mui-color('white-alpha-30'); }
-.mui--text-white-12 { color: mui-color('white-alpha-12'); }
+.mui--text-accent           { color: $mui-text-accent; }
+.mui--text-accent-secondary { color: $mui-text-accent-secondary; }
+.mui--text-accent-hint      { color: $mui-text-accent-hint; }
 
-.mui--text-accent    { color: $mui-accent-color; }
-.mui--text-accent-87 { color: rgba($mui-accent-color, .87); }
-.mui--text-accent-54 { color: rgba($mui-accent-color, .54); }
-.mui--text-accent-38 { color: rgba($mui-accent-color, .38); }
-.mui--text-accent-12 { color: rgba($mui-accent-color, .12); }
+.mui--text-black            { color: mui-color('black'); }
+.mui--text-white            { color: mui-color('white'); }
+.mui--text-danger           { color: $mui-text-danger; }
+
+
 
 
 // ============================================================================
@@ -239,112 +238,81 @@
 .mui--visible-md-inline-block,
 .mui--visible-lg-block,
 .mui--visible-lg-inline,
-.mui--visible-lg-inline-block {
+.mui--visible-lg-inline-block,
+.mui--visible-xl-block,
+.mui--visible-xl-inline,
+.mui--visible-xl-inline-block {
   display: none !important;
 }
 
+
 @media (max-width: $mui-screen-xs-max) {
   @include x-responsive-visibility('.mui-visible-xs');
+  
+  .mui--visible-xs-block        { display: block !important; }
+  .mui--visible-xs-inline       { display: inline !important; }
+  .mui--visible-xs-inline-block { display: inline-block !important; }
 }
 
-.mui--visible-xs-block {
-  @media (max-width: $mui-screen-xs-max) {
-    display: block !important;
-  }
-}
-
-.mui--visible-xs-inline {
-  @media (max-width: $mui-screen-xs-max) {
-    display: inline !important;
-  }
-}
-
-.mui--visible-xs-inline-block {
-  @media (max-width: $mui-screen-xs-max) {
-    display: inline-block !important;
-  }
-}
 
 @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
-  @include x-responsive-visibility('.mui--visible-sm');
+  @include x-responsive-visibility('.mui-visible-sm');
+  
+  .mui--visible-sm-block        { display: block !important; }
+  .mui--visible-sm-inline       { display: inline !important; }
+  .mui--visible-sm-inline-block { display: inline-block !important; }
 }
 
-.mui--visible-sm-block {
-  @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
-    display: block !important;
-  }
-}
-
-.mui--visible-sm-inline {
-  @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
-    display: inline !important;
-  }
-}
-
-.mui--visible-sm-inline-block {
-  @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
-    display: inline-block !important;
-  }
-}
 
 @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
-  @include x-responsive-visibility('.mui--visible-md');
+  @include x-responsive-visibility('.mui-visible-md');
+  
+  .mui--visible-md-block        { display: block !important; }
+  .mui--visible-md-inline       { display: inline !important; }
+  .mui--visible-md-inline-block { display: inline-block !important; }
 }
 
-.mui--visible-md-block {
-  @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
-    display: block !important;
-  }
+
+@media (min-width: $mui-screen-lg-min) and (max-width: $mui-screen-lg-max) {
+  @include x-responsive-visibility('.mui-visible-lg');
+  
+  .mui--visible-lg-block        { display: block !important; }
+  .mui--visible-lg-inline       { display: inline !important; }
+  .mui--visible-lg-inline-block { display: inline-block !important; }
 }
 
-.mui--visible-md-inline {
-  @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
-    display: inline !important;
-  }
+
+@media (min-width: $mui-screen-xl-min) {
+  @include x-responsive-visibility('.mui-visible-xl');
+  
+  .mui--visible-xl-block        { display: block !important; }
+  .mui--visible-xl-inline       { display: inline !important; }
+  .mui--visible-xl-inline-block { display: inline-block !important; }
 }
 
-.mui--visible-md-inline-block {
-  @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
-    display: inline-block !important;
-  }
-}
-
-@media (min-width: $mui-screen-lg-min) {
-  @include x-responsive-visibility('.mui--visible-lg');
-}
-
-.mui--visible-lg-block {
-  @media (min-width: $mui-screen-lg-min) {
-    display: block !important;
-  }
-}
-
-.mui--visible-lg-inline {
-  @media (min-width: $mui-screen-lg-min) {
-    display: inline !important;
-  }
-}
-
-.mui--visible-lg-inline-block {
-  @media (min-width: $mui-screen-lg-min) {
-    display: inline-block !important;
-  }
-}
 
 @media (max-width: $mui-screen-xs-max) {
   @include x-responsive-invisibility('.mui--hidden-xs');
 }
 
+
 @media (min-width: $mui-screen-sm-min) and (max-width: $mui-screen-sm-max) {
   @include x-responsive-invisibility('.mui--hidden-sm');
 }
+
 
 @media (min-width: $mui-screen-md-min) and (max-width: $mui-screen-md-max) {
   @include x-responsive-invisibility('.mui--hidden-md');
 }
 
-@media (min-width: $mui-screen-lg-min) {
+
+@media (min-width: $mui-screen-lg-min) and (max-width: $mui-screen-lg-max) {
   @include x-responsive-invisibility('.mui--hidden-lg');
+}
+
+
+@media (min-width: $mui-screen-xl-min) {
+  @include x-responsive-invisibility('.mui--hidden-xl');
 }
 
 
