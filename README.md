@@ -7,7 +7,7 @@
 
 `mui-sass` is a Sass-powered version of MUI framework for your applications. It works with Ruby on Rails, Compass, Sprockets, etc. 
 
-`mui-sass` allows to include MUI framework CSS and JavaScript components. HTML Email, React, WebComponents and Design Files are not included.
+`mui-sass` allows to include MUI framework Sass and JavaScript components. React, Angular, HTML Email, WebComponents are not included.
 
 ## Installation
 
@@ -89,31 +89,38 @@ You can also import individual Sass components.
 First you need to include core components:
 
 ```scss
-@import 'mui/normalize-3.0.2';
+// Normalizer
+@import "mui/normalize-3.0.3";
+// Core variables and mixins
 @import 'mui/colors';
 @import 'mui/variables';
 @import 'mui/mixins';
+// CSS Reboot
+@import "mui/reboot";
 ```
 
 Then include desired Sass component:
 
 ```scss
-@import 'mui/appbar';
-@import 'mui/buttons';
-@import 'mui/dividers';
-@import 'mui/dropdowns';
-@import 'mui/forms';
-@import 'mui/grid';
-@import 'mui/helpers';
-@import 'mui/layout';
-@import 'mui/overlay';
-@import 'mui/panel';
-@import 'mui/ripple';
-@import 'mui/scaffolding';
-@import 'mui/semantic-markup';
-@import 'mui/tables';
-@import 'mui/tabs';
-@import 'mui/typography';
+// Components
+@import "mui/appbar";
+@import "mui/buttons";
+@import "mui/checkbox-and-radio";
+@import "mui/containers";
+@import "mui/divider";
+@import "mui/dropdown";
+@import "mui/form";
+@import "mui/grid";
+@import "mui/panel";
+@import "mui/select";
+@import "mui/table";
+@import "mui/tabs";
+@import "mui/textfield";
+// Miscellaneous
+@import "mui/helpers";
+@import "mui/overlay";
+@import "mui/ripple";
+@import "mui/typography";
 ```
 
 ### Variables
@@ -129,7 +136,7 @@ $mui-base-font-size: 16px !default;
 
 ## Versioning
 
-MUI for Sass follows the upstream version of MUI framework. But last version number may be ahead, in case there is a need to release project specific changes.
+MUI for Sass follows the upstream version of MUI framework, but last version number may be ahead, in case there is a need to release project specific changes. Some upstream versions may be skipped if they include no Sass/JavaScript related changes.
 
 Please always refer to the [CHANGELOG](https://github.com/rubysamurai/mui-sass/blob/master/CHANGELOG.md) when upgrading.
 
