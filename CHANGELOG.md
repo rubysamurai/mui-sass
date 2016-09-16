@@ -1,3 +1,8 @@
+## 0.7.2 (2016-09-16)
+
+- Drop Compass support
+- Update assets to match upstream version
+
 ## 0.6.8 (2016-07-22)
 
 - Update assets to match upstream version
