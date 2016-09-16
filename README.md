@@ -5,14 +5,11 @@
 
 [MUI](https://www.muicss.com/) is a lightweight CSS framework that follows Google's Material Design guidelines
 
-`mui-sass` is a Sass-powered version of MUI framework for your applications. It works with Ruby on Rails, Compass, Sprockets, etc. 
+`mui-sass` is a Sass-powered version of MUI framework for your Ruby applications.
 
 `mui-sass` allows to include MUI framework Sass and JavaScript components. React, Angular, HTML Email, WebComponents are not included.
 
 ## Installation
-
-* [Ruby on Rails](#ruby-on-rails)
-* [Compass](#compass)
 
 ### Ruby on Rails
 
@@ -39,46 +36,6 @@ Open `app/assets/javascripts/application.js` file and add this line:
 ````
 
 Restart Rails web server if it was running and now your Rails application is powered by Sass version of MUI framework.
-
-### Compass
-
-To use Compass extension you'll need to install `mui-sass` gem:
-
-```
-gem install mui-sass
-```
-
-#### Existing Compass project
-
-If you have an existing Compass project, open `config.rb` file and require `mui-sass` there:
-
-```ruby
-require 'mui-sass'
-```
-
-Navigate to your project's folder and run command:
-
-```
-compass install mui -r mui-sass
-```
-
-This will create new file `styles.scss`, that imports MUI components.
-
-Instead of the install command provided above, you can manually import `mui`:
-
-```
-@import 'mui';
-```
-
-#### New Compass project
-
-If you are creating a new Compass project and wish to include `mui-sass` run command:
-
-```
-compass create project-name -r mui-sass --using mui
-```
-
-This command will create a new Compass project with `styles.scss` file, which imports MUI components.
 
 ## Usage
 
