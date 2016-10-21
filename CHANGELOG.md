@@ -1,3 +1,7 @@
+## 0.9.2 (2016-10-21)
+
+- Update assets to match upstream version
+
 ## 0.9.1 (2016-10-21)
 
 - Update assets to match upstream version
