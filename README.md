@@ -43,17 +43,16 @@ By default, using `@import 'mui';` and `//= require mui`, all of MUI components 
 
 You can also import individual Sass components.
 
-First you need to include core components:
+First you need to include core and global components:
 
 ```scss
-// Normalizer
-@import "mui/normalize-3.0.3";
 // Core variables and mixins
-@import 'mui/colors';
-@import 'mui/variables';
-@import 'mui/mixins';
-// CSS Reboot
-@import "mui/reboot";
+@import "mui/colors";
+@import "mui/variables";
+@import "mui/mixins";
+
+// Globals
+@import "mui/globals";
 ```
 
 Then include desired Sass component:
