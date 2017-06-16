@@ -1,3 +1,9 @@
+## 0.9.17 (skipped, no Sass changes)
+
+## 0.9.16 (skipped, no Sass changes)
+
+## 0.9.15 (skipped, no Sass changes)
+
 ## 0.9.14 (2017-04-10)
 
 - Update assets to match upstream version
@@ -14,6 +20,8 @@
 
 - Update assets to match upstream version
 
+## 0.9.10 (skipped, no Sass changes)
+
 ## 0.9.9 (2017-02-16)
 
 - Update assets to match upstream version
@@ -21,6 +29,8 @@
 ## 0.9.8 (2017-01-13)
 
 - Update assets to match upstream version
+
+## 0.9.7 (skipped, no Sass changes)
 
 ## 0.9.6 (2016-12-20)
 
@@ -54,6 +64,8 @@
 
 - Update assets to match upstream version
 
+## 0.8.0 (skipped, no Sass changes)
+
 ## 0.7.5 (2016-09-16)
 
 - Update assets to match upstream version
@@ -62,10 +74,18 @@
 
 - Update assets to match upstream version
 
+## 0.7.3 (skipped, no Sass changes)
+
 ## 0.7.2 (2016-09-16)
 
 - Drop Compass support
 - Update assets to match upstream version
+
+## 0.7.1 (skipped, no Sass changes)
+
+## 0.7.0 (skipped, no Sass changes)
+
+## 0.6.9 (skipped, no Sass changes)
 
 ## 0.6.8 (2016-07-22)
 
@@ -78,6 +98,10 @@
 ## 0.6.6 (2016-07-22)
 
 - Update assets to match upstream version
+
+## 0.6.5 (skipped, no Sass changes)
+
+## 0.6.4 (skipped, no Sass changes)
 
 ## 0.6.3 (2016-06-27)
 
@@ -99,9 +123,27 @@
 
 - Update assets to match upstream version
 
+## 0.5.8 (skipped, no Sass changes)
+
+## 0.5.7 (skipped, no Sass changes)
+
+## 0.5.6 (skipped, no Sass changes)
+
+## 0.5.5 (skipped, no Sass changes)
+
+## 0.5.4 (skipped, no Sass changes)
+
+## 0.5.3 (skipped, no Sass changes)
+
+## 0.5.2 (skipped, no Sass changes)
+
+## 0.5.1 (skipped, no Sass changes)
+
 ## 0.5.0 (2016-04-25)
 
 - Update assets to match upstream version
+
+## 0.4.9 (skipped, no Sass changes)
 
 ## 0.4.8 (2016-03-31)
 
@@ -110,6 +152,14 @@
 ## 0.4.7 (2016-03-02)
 
 - Update assets to match upstream version
+
+## 0.4.6 (skipped, no Sass changes)
+
+## 0.4.5 (skipped, no Sass changes)
+
+## 0.4.4 (skipped, no Sass changes)
+
+## 0.4.3 (skipped, no Sass changes)
 
 ## 0.4.2 (2016-02-05)
 
@@ -131,6 +181,8 @@
 
 - Update assets to match upstream version
 
+## 0.2.9 (skipped, no Sass changes)
+
 ## 0.2.8 (2015-12-03)
 
 - Update assets to match upstream version
@@ -150,6 +202,8 @@
 ## 0.2.4 (2015-11-27)
 
 - Update assets to match upstream version
+
+## 0.2.3 (skipped, no Sass changes)
 
 ## 0.2.2 (2015-11-22)
 
