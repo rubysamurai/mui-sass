@@ -33,6 +33,7 @@ module Mui
 
         def register_rails_engine
           require 'mui/sass/engine'
+          require 'autoprefixer-rails'
         end
 
         def register_sprockets
