@@ -1,3 +1,13 @@
+## 0.9.21 (2017-08-07)
+
+- Update assets to match upstream version
+
+## 0.9.20 (skipped, no Sass changes)
+
+## 0.9.19 (skipped, no Sass changes)
+
+## 0.9.18 (skipped, no Sass changes)
+
 ## 0.9.17 (skipped, no Sass changes)
 
 ## 0.9.16 (skipped, no Sass changes)
