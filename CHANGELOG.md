@@ -1,3 +1,9 @@
+## 0.9.26 (2017-10-31)
+
+- Update assets to match upstream version
+
+## 0.9.25 (skipped, no Sass changes)
+
 ## 0.9.24 (2017-08-30)
 
 - Update assets to match upstream version
