@@ -1,3 +1,8 @@
+## 0.9.29 (2017-11-28)
+
+- Update assets to match upstream version
+- Update development dependencies
+
 ## 0.9.28 (2017-10-31)
 
 - Update assets to match upstream version
