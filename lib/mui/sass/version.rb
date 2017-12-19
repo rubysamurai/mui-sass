@@ -1,5 +1,5 @@
 module Mui
   module Sass
-    VERSION = '0.9.34'.freeze
+    VERSION = '0.9.35'.freeze
   end
 end
